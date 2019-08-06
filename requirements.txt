@@ -1,0 +1,10 @@
+pandas
+tqdm
+pydub
+scipy
+numpy
+scikit_learn==0.21.3
+torch
+torchvision==0.3.0
+git+https://github.com/keunwoochoi/torchaudio-contrib.git
+tensorboardX
