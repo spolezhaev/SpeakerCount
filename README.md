@@ -52,7 +52,7 @@ AudioCRNN(
   
 All of my investigation is in CountNet.ipynb Jupyter notebook (code is not prettified)
 
-Total accuracy is about 72 percent.
+Total accuracy is about 0.72.
 Confusion matrix:
 ![img](img.png)
 
