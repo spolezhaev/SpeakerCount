@@ -44,10 +44,20 @@ AudioCRNN(
 ## Docker
 
 * Build the docker image: `docker build -t speakerCount .`
-* Predict from example: `docker run -it speakercount:latest  /bin/bash`
+* Run container: `docker run -it speakercount:latest  /bin/bash`
 * To make prediction on test data run
 `python eval.py`
 * To inference NN on your data run `python infer.py filepath.wav` 
+* To train model on your data run `python train.py`
+  
+All of my investigation is in CountNet.ipynb Jupyter notebook (code is not prettified)
+
+Total accuracy is about 72 percent.
+Confusion matrix:
+![img](img.png)
+
+
+As expected the most complicated classes are 3 and 4+ speakers. Possible solution is to use another dataset with audio with higer quality.
 
 
 When building image, docker downloads saved model and input data from my Yandex disk. If the direct link is broken please contact me. Links to my drive:

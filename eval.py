@@ -42,9 +42,10 @@ class ClassificationEvaluator(object):
 
         self.mel = MelspectrogramStretch(norm='db').to(self.device)
 
-    def evaluate(self, metrics, debug=False):
+        def evaluate(self, metrics, debug=False):
         with torch.no_grad():
             total_metrics = torch.zeros(len(metrics))
+            sum_conf_matrix = np.zeros((4, 4))
             for batch_idx, batch in enumerate(tqdm(self.data_loader)):
                 batch = [b.to(self.device) for b in batch]
                 data, target = batch[:-1], batch[-1]
@@ -53,12 +54,19 @@ class ClassificationEvaluator(object):
 
                 self.model.classes
                 batch_size = data[0].size(0)
-            
+                
+                if debug:
+                    self._store_batch(data, batch_size, output, target)
+                
                 for i, metric in enumerate(metrics):
                     total_metrics[i] += metric(output, target) * batch_size
 
+                sum_conf_matrix += confusion_matrix(target.cpu().numpy(), torch.argmax(output,dim=1).data.cpu().numpy())
+
             size = len(self.data_loader.dataset)
             ret = {met.__name__ : "%.3f"%(total_metrics[i].item() / size) for i, met in enumerate(metrics)}
+            print('Confusion matrix')
+            print(sum_conf_matrix)
             return ret
 
 if __name__ == '__main__':
